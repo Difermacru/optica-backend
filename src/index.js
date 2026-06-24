@@ -15,12 +15,9 @@ const PORT = process.env.PORT || 3000
 
 app.use(cors({
   origin: (origin, callback) => {
-    const allowed = [
-      process.env.FRONTEND_URL,
-      'http://localhost:5173',
-      'http://localhost:3000',
-    ].filter(Boolean)
-    if (!origin || allowed.includes(origin)) {
+    if (!origin || 
+        origin.includes('vercel.app') || 
+        origin.includes('localhost')) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -28,7 +25,6 @@ app.use(cors({
   },
   credentials: true
 }))
-
 app.use(express.json())
 
 // Públicas
